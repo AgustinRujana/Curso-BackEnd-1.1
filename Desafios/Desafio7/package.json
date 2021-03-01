@@ -1,0 +1,16 @@
+{
+  "name": "desafio7",
+  "version": "1.0.0",
+  "description": "Consigna: Realizar un proyecto de servidor basado en node.js que utilice el middleware express e implemente tres endpoints en el puerto 8080:",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

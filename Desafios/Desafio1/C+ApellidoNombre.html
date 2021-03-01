@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio 1 - Parte 2</title>
+</head>
+<body>
+
+    <h1>Vamos a probar, ahora con clases</h1>
+
+    <script>
+
+        class Usuario {
+            constructor (nombre, apellido, libros, mascotas) {
+                this.nombre = nombre;
+                this.apellido = apellido;
+                this.libros = libros;
+                this.mascotas = mascotas;
+            }
+
+            getFullName() {
+                console.log(`${this.nombre} ${this.apellido}`) 
+            }
+
+            addMascota(newMascota){
+                this.mascotas = [...this.mascotas, newMascota]
+                console.log( this.mascotas )
+            }
+
+            getMascotas() {
+                 console.log( this.mascotas.length )
+            }
+
+            addBook(newBook, newAuthor) {
+                this.libros = [...this.libros, {nombre: newBook, autor: newAuthor} ];
+                console.log( this.libros )
+            }
+            
+            getBooks(){
+                let arregloNombres = []
+
+                this.libros.forEach(e => {
+                    arregloNombres = [...arregloNombres, e.nombre]                                                            
+                });
+        
+                console.log(arregloNombres)
+            }
+        }
+
+        let UsuarioIngresado = new Usuario('Pepe', 'Juarez', [{nombre: 'El señor de las moscas',autor: 'William Golding'}, {nombre: 'Fundacion', autor: 'Isaac Asimov'}], ['perro', 'gato'])
+
+    </script>
+</body>
+</html>

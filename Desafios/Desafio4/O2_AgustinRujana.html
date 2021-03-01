@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio 4 - Consigna 2</title>
+</head>
+<body>
+    <input id='inputText'>
+    <span id='outputWord'></span>
+
+    <script type="module">
+        import { fromEvent } from 'https://dev.jspm.io/rxjs@6/_esm2015';
+        import { map, filter } from 'https://dev.jspm.io/rxjs@6/_esm2015/operators';
+
+        const input = document.getElementById('inputText');
+        const span = document.getElementById('outputWord')
+        const observable = fromEvent(input, 'keyup');
+
+        let outputText = '';
+
+        const subscripcion = observable.pipe(
+                filter( event =>{
+                    if( (event.which <= 90 && event.which >=48 || event.which === 32) ) {
+                        return event;
+                    }
+                }
+            ),
+                map( event => {
+                    return event.key;
+                }
+            )
+        ).subscribe( key => {
+         outputText += key
+
+         if(outputText === 'error'){
+             subscripcion.error('Se ingreso la palabra error')
+         }
+
+         if(outputText === 'complete'){
+             subscripcion.complete()
+         }
+
+         outputWord.textContent = outputText.split('').reverse().join('');
+         setTimeout (() => { subscripcion.unsubscribe; limpiar() },30000)
+         // Aparte del setTimeout se puede hacer un if, while, hay muchas formas.
+        }, error => {limpiar()}, () => {limpiar()})
+
+        const limpiar = () => {
+            outputText = '';
+            input.value = '';
+            input.disabled = true;
+            span.textContent = '';
+        }
+    </script>
+
+</body>
+</html>

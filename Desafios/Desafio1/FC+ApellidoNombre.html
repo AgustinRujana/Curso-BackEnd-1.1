@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio 1 - Parte 1</title>
+</head>
+<body>
+
+    <h1>Vamos a probar</h1>
+
+    <script>
+
+        function Usuario(nombre, apellido, libros, mascotas) {
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.libros = libros;
+            this.mascotas = mascotas;
+        }
+
+        Usuario.prototype.getFullName = function() {
+            console.log(`${this.nombre} ${this.apellido}`) 
+        }
+
+        Usuario.prototype.addMascota = function(newMascota){
+            this.mascotas = [...this.mascotas, newMascota]
+            console.log( this.mascotas )
+        }
+
+        Usuario.prototype.getMascotas = function() {
+            console.log( this.mascotas.length )
+        }
+
+        Usuario.prototype.addBook = function(newBook, newAuthor) {
+            this.libros = [...this.libros, {nombre: newBook, autor: newAuthor} ];
+            console.log( this.libros )
+        }
+        
+        Usuario.prototype.getBooks = function(){
+            let arregloNombres = []
+
+            this.libros.forEach(e => {
+                arregloNombres = [...arregloNombres, e.nombre]                                                            
+            });
+    
+            console.log(arregloNombres)
+        }
+
+        let UsuarioIngresado = new Usuario('Pepe', 'Juarez', [{nombre: 'El señor de las moscas',autor: 'William Golding'}, {nombre: 'Fundacion', autor: 'Isaac Asimov'}], ['perro', 'gato'])
+
+    </script>
+</body>
+</html>
