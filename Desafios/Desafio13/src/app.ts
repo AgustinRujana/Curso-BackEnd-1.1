@@ -1,16 +1,18 @@
 //Imports
 import express from 'express'
 import handlebars from 'express-handlebars'
+import {messageClass} from './messagesFile'
+//Initialization
+const fs = require('fs');
 
-
-//Express Initialization
-const app = require('express')();
 const port: number = 8080;
+
+const app = require('express')();
 const httpServer = require('http').createServer(app);
 const io = require('socket.io')(httpServer);
 
-app.use(express.json())
-app.use(express.urlencoded( {extended:true } ))
+app.use(express.json());
+app.use(express.urlencoded( {extended:true } ));
 
 //Handlebars Initialization
 app.engine('hbs', handlebars({
@@ -30,21 +32,20 @@ app.use('/', require('../routes/products'))
 app.use(express.static('public'))
 
 //Io
-io.on('connection', (socket) =>{
-
+let msg = new messageClass('./public/messages.txt')
+io.on('connection', async (socket) =>{
+    socket.emit('Mensajes Anteriores', await msg.readMsg())
     socket.on('Producto Nuevo', (prod) => {
         io.emit('Producto Nuevo', prod)
-        console.log(prod)
     })
-    console.log(socket.id)
+
+    socket.on('message', (payload) => {
+        io.emit('message', payload)
+        msg.saveMsg(payload.email, payload.date, payload.msg)
+    })
 })
 
 //Listen
-
-// app.listen(port, () => {
-//     console.log(`Running on port ${port}`)
-// })
-
 httpServer.listen(port, () => {
     console.log(`Running on port ${port}`)
 })

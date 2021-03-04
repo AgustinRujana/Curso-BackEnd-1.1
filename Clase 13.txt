@@ -1,0 +1,11 @@
+0:15:30 Paint Colaborativo
+0:19:10 Inicia NPM para el codigo
+0:22:01 Empieza a codear
+0:31:20 Crea canal
+0:48:50 Explica mensajes
+0:57:10 Recreo
+1:04:50 Fin Recreo
+1:09:10 Explica error
+1:11:20 Array Users (Push)
+1:26:50 Inputs
+
