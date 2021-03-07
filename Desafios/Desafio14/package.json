@@ -22,7 +22,7 @@
     "typescript": "^4.1.3"
   },
   "scripts": {
-    "babel": "node_modules/.bin/babel dist/src/app.js -o babel/index.js -w",
+    "babel": "node_modules/.bin/babel src/app.ts -o babel/index.js -w",
     "dev": "nodemon --exec ts-node src/app.ts",
     "build": "tsc"
   },

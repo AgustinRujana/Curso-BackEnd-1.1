@@ -1,0 +1,7 @@
+0:05:30 Instalacion
+0:08:00 Comienza desafio mensajes
+0:10:28 Ejecuta WebPack
+0:17:30 Con typescript
+0:21:00 Termina configuracion
+0:22:00 WebPack.config.js
+1:02:01 Primera entrega
