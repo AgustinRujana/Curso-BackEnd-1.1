@@ -1,0 +1,11 @@
+docker run --name mongo-coder -d mongo:4.2 -p 27017:27017
+docker exec -it mongo-coder bash
+root@919a5ba30803:/# mongo
+root@919a5ba30803:/# db.items.insert({nombre:'Fideos', categoria:'Harina', stock:'20'})
+root@919a5ba30803:/# db.items.insert({nombre:'Leche', categoria:'Lacteos', stock:'30'})
+root@919a5ba30803:/# db.items.insert({nombre:'Crema', categoria:'Lacteos', stock:'15'})
+root@919a5ba30803:/# db.items.find()
+
+{ "_id" : ObjectId("605a5b7ccabed25eaed5af94"), "nombre" : "Fideos", "categoria" : "Harina", "stock" : "20" }
+{ "_id" : ObjectId("605a5bdecabed25eaed5af95"), "nombre" : "Leche", "categoria" : "Lacteos", "stock" : "30" }
+{ "_id" : ObjectId("605a5bffcabed25eaed5af96"), "nombre" : "Crema", "categoria" : "Lacteos", "stock" : "15" }

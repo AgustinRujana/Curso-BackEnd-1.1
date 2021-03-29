@@ -1,0 +1,90 @@
+> use ecommerce
+switched to db ecommerce
+> db.mensajes.insert({email:'Mateo', date:'4/03/2021 12:31:02',msg: 'Holaaa'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Mateo', date:'4/03/2021 12:31:10',msg: 'Como estas?'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Agustin', date:'4/03/2021 12:31:40',msg: 'Hola, todo bien, vos?'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Mateo', date:'4/03/2021 12:32:20',msg: 'Necesito un favor'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Mateo', date:'4/03/2021 12:32:30',msg: 'Necesito tres millones de dolares'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Agustin', date:'4/03/2021 12:34:40',msg: 'Soy programador pero tampoco la pasion'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Agustin', date:'4/03/2021 12:34:45',msg: 'Tengo solo 2 (?'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Mateo', date:'4/03/2021 12:52:20',msg: 'Bueno'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Mateo', date:'4/03/2021 12:55:20',msg: 'Matanga dijo la changa'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.insert({email:'Agustin', date:'4/03/2021 12:56:45',msg: 'Pasa CBU'})
+WriteResult({ "nInserted" : 1 })
+> db.mensajes.find()
+{ "_id" : ObjectId("6061ff79ce0e96494c14a371"), "email" : "Mateo", "date" : "4/03/2021 12:31:02", "msg" : "Holaaa" }
+{ "_id" : ObjectId("6061ffacce0e96494c14a372"), "email" : "Mateo", "date" : "4/03/2021 12:31:10", "msg" : "Como estas?" }
+{ "_id" : ObjectId("6061ffd3ce0e96494c14a373"), "email" : "Agustin", "date" : "4/03/2021 12:31:40", "msg" : "Hola, todo bien, vos?" }
+{ "_id" : ObjectId("60620067ce0e96494c14a374"), "email" : "Mateo", "date" : "4/03/2021 12:32:20", "msg" : "Necesito un favor" }
+{ "_id" : ObjectId("60620080ce0e96494c14a375"), "email" : "Mateo", "date" : "4/03/2021 12:32:30", "msg" : "Necesito tres millones de dolares" }
+{ "_id" : ObjectId("606200a5ce0e96494c14a376"), "email" : "Agustin", "date" : "4/03/2021 12:34:40", "msg" : "Soy programador pero tampoco la pasion" }
+{ "_id" : ObjectId("606200bfce0e96494c14a377"), "email" : "Agustin", "date" : "4/03/2021 12:34:45", "msg" : "Tengo solo 2 (?" }
+{ "_id" : ObjectId("606200e0ce0e96494c14a378"), "email" : "Mateo", "date" : "4/03/2021 12:52:20", "msg" : "Bueno" }
+{ "_id" : ObjectId("606200f3ce0e96494c14a379"), "email" : "Mateo", "date" : "4/03/2021 12:55:20", "msg" : "Matanga dijo la changa" }
+{ "_id" : ObjectId("60620110ce0e96494c14a37a"), "email" : "Agustin", "date" : "4/03/2021 12:56:45", "msg" : "Pasa CBU" }
+> db.createCollection("productos", {validator:{$jsonSchema: {bsonType: "object", required: [ "nombre", "categoria", "stock", "price" ], properties:{nombre: {bsonType: "string"},categoria: {bsonType: "string"}, stock: {bsonType: "int", minimum: 0}, price: {bsonType: "int", minimum: 100, maximum: 5000}}}}})
+> db.productos.insert({nombre:"Fideos", categoria:"Harina", stock:NumberInt(20), price:NumberInt(300)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Harina Triple 0", categoria:"Harina", stock:NumberInt(220), price:NumberInt(3300)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Queso", categoria:"Lacteo", stock:NumberInt(20), price:NumberInt(300)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Leche", categoria:"Lacteo", stock:NumberInt(26), price:NumberInt(350)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Crema", categoria:"Lacteo", stock:NumberInt(26), price:NumberInt(350)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Yogurth", categoria:"Lacteo", stock:NumberInt(6), price:NumberInt(359)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Arvejas", categoria:"Enlatados", stock:NumberInt(6), price:NumberInt(359)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Choclo", categoria:"Enlatados", stock:NumberInt(6), price:NumberInt(459)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Ensalada Jardinera", categoria:"Enlatados", stock:NumberInt(54), price:NumberInt(459)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.insert({nombre:"Heladera medio trucha", categoria:"Electro", stock:NumberInt(54), price:NumberInt(4329)})
+WriteResult({ "nInserted" : 1 })
+> db.productos.find()
+{ "_id" : ObjectId("606211b51f49696f42d7318f"), "nombre" : "Fideos", "categoria" : "Harina", "stock" : 20, "price" : 300 }
+{ "_id" : ObjectId("606211fe1f49696f42d73190"), "nombre" : "Harina Triple 0", "categoria" : "Harina", "stock" : 220, "price" : 3300 }
+{ "_id" : ObjectId("606212101f49696f42d73191"), "nombre" : "Queso", "categoria" : "Lacteo", "stock" : 20, "price" : 300 }
+{ "_id" : ObjectId("606212221f49696f42d73192"), "nombre" : "Leche", "categoria" : "Lacteo", "stock" : 26, "price" : 350 }
+{ "_id" : ObjectId("6062122a1f49696f42d73193"), "nombre" : "Crema", "categoria" : "Lacteo", "stock" : 26, "price" : 350 }
+{ "_id" : ObjectId("606212431f49696f42d73194"), "nombre" : "Yogurth", "categoria" : "Lacteo", "stock" : 6, "price" : 359 }
+{ "_id" : ObjectId("606212621f49696f42d73195"), "nombre" : "Arvejas", "categoria" : "Enlatados", "stock" : 6, "price" : 359 }
+{ "_id" : ObjectId("6062127d1f49696f42d73196"), "nombre" : "Choclo", "categoria" : "Enlatados", "stock" : 6, "price" : 459 }
+{ "_id" : ObjectId("606212a01f49696f42d73197"), "nombre" : "Ensalada Jardinera", "categoria" : "Enlatados", "stock" : 54, "price" : 459 }
+{ "_id" : ObjectId("606212bb1f49696f42d73198"), "nombre" : "Heladera medio trucha", "categoria" : "Electro", "stock" : 54, "price" : 4329 }
+> db.productos.count()
+10
+> db.mensajes.count()
+10
+> db.productos.find({price:{$lt: 1000}})
+{ "_id" : ObjectId("606211b51f49696f42d7318f"), "nombre" : "Fideos", "categoria" : "Harina", "stock" : 20, "price" : 300 }
+{ "_id" : ObjectId("606212101f49696f42d73191"), "nombre" : "Queso", "categoria" : "Lacteo", "stock" : 20, "price" : 300 }
+{ "_id" : ObjectId("606212221f49696f42d73192"), "nombre" : "Leche", "categoria" : "Lacteo", "stock" : 26, "price" : 350 }
+{ "_id" : ObjectId("6062122a1f49696f42d73193"), "nombre" : "Crema", "categoria" : "Lacteo", "stock" : 26, "price" : 350 }
+{ "_id" : ObjectId("606212431f49696f42d73194"), "nombre" : "Yogurth", "categoria" : "Lacteo", "stock" : 6, "price" : 359 }
+{ "_id" : ObjectId("606212621f49696f42d73195"), "nombre" : "Arvejas", "categoria" : "Enlatados", "stock" : 6, "price" : 359 }
+{ "_id" : ObjectId("6062127d1f49696f42d73196"), "nombre" : "Choclo", "categoria" : "Enlatados", "stock" : 6, "price" : 459 }
+{ "_id" : ObjectId("606212a01f49696f42d73197"), "nombre" : "Ensalada Jardinera", "categoria" : "Enlatados", "stock" : 54, "price" : 459 }
+> db.productos.find({price:{$gt:3000}})
+{ "_id" : ObjectId("606211fe1f49696f42d73190"), "nombre" : "Harina Triple 0", "categoria" : "Harina", "stock" : 220, "price" : 3300 }
+{ "_id" : ObjectId("606212bb1f49696f42d73198"), "nombre" : "Heladera medio trucha", "categoria" : "Electro", "stock" : 54, "price" : 4329 }
+> db.productos.find({$and:[{price:{$gt:1000}},{ price:{$lt:3000}}]})
+No devuelve nada porque no habia nada en ese rango .-.
+> db.productos.update({stock:{$gt: 0}},{stock:NumberInt(100)})
+> db.productos.update({price:{$gt: 4000}},{stock:NumberInt(0)})
+> db.productos.deleteMany({price:{$lt: 1000}})
+> db.createUser({user: "pepe", pwd:"asd456", roles: [{ role: "read", db: "ecommerce"}]})
+> mongo -u pepe -p asd456
+> db.productos.insert({nombre:"Heladera medio trucha", categoria:"Electro", stock:NumberInt(54), price:NumberInt(4329)})
+Mensaje de error
