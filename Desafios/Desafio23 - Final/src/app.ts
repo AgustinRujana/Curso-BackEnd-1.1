@@ -1,37 +1,18 @@
 //Imports
 import express from 'express'
 import handlebars from 'express-handlebars'
-import mongoose from 'mongoose';
+import { denormalize, normalize, schema } from 'normalizr';
 
-import {messageClass} from './messagesFile'
-const { options } = require('../db/mysql.db')
-//Initialization
-const { Schema } = mongoose;
-mongoose.connect('mongodb://localhost/ecommerce', {useNewUrlParser: true, useUnifiedTopology: true});
-
-// const db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-//   console.log('we are in')
-// });
-
-const msgSchema = new Schema({
-    email: String,
-    date: Date,
-    msg: String
-})
-
-const Msg = mongoose.model('mensajes', msgSchema)
 
 const port: number = 8000;
 
 const app = require('express')();
 const httpServer = require('http').createServer(app);
 const io = require('socket.io')(httpServer);
+const fs = require('fs')
 
 app.use(express.json());
 app.use(express.urlencoded( {extended:true } ));
-
 
 //Handlebars Initialization
 app.engine('hbs', handlebars({
@@ -43,24 +24,47 @@ app.engine('hbs', handlebars({
 app.set('views', './src/views')
 app.set('view engine', 'hbs')
 
-////Routers
-//Products Main
+//Routes
 app.use('/', require('../routes/products'))
 
 //Public
 app.use(express.static('public'))
 
 //Io
-io.on('connection', async (socket) =>{
-    socket.emit('Mensajes Anteriores', await Msg.find())
-    socket.on('Producto Nuevo', (prod) => {
-        io.emit('Producto Nuevo', prod)
-    })
+let messagesFromServer = fs.readFileSync('./public/messages.json', 'utf8', function (err) { console.log(err)})
+    messagesFromServer = JSON.parse(messagesFromServer)
+
+const user = new schema.Entity('user')   
+const msgData = new schema.Entity('messages', {
+    author: user
+})
+
+//Desnormalizar
+let denormalizeData = denormalize(messagesFromServer, {author: user}, user)
+
+io.on('connection', (socket) =>{
+    socket.emit('Mensajes Anteriores', denormalizeData)
 
     socket.on('message', (payload) => {
         io.emit('message', payload)
-        const msg = new Msg({email: payload.email, date: payload.date, msg: payload.msg})
-        msg.save()
+        const msg = {
+            author: {
+                id: payload.author.id,
+                nombre: payload.author.nombre,
+                apellido: payload.author.apellido,
+                edad: payload.author.edad,
+                alias: payload.author.alias,
+                avatar: payload.author.avatar
+            },
+            text : payload.text
+        }
+
+        //Normalizar
+        let messagesJSON = [...denormalizeData, msg]
+
+        const normalizedData = normalize(messagesJSON, msgData);
+
+        fs.writeFile('./public/messages.json', JSON.stringify(normalizedData), 'utf8', function (err) { console.log(err)})
     })
 })
 
