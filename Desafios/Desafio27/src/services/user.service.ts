@@ -42,4 +42,12 @@ module.exports = {
     failRegister: (req, res) => {
         res.render("registerError",  {})
     },
+
+    facebookLogIn: (req, res) => {
+        passport.authenticate('facebook')
+    },
+
+    facebookCallback:(req, res) => {
+        passport.authenticate('facebook', { successRedirect: '/login', failureRedirect: '/faillogin' })
+    }
 }

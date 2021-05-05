@@ -5,6 +5,7 @@ import { user as User } from './db/model';
 import passport from 'passport';
 import bCrypt from 'bCrypt';
 import { Strategy as LocalStrategy } from 'passport-local';
+import { Strategy as FacebookStrategy } from 'passport-facebook'
 
 const port: number = 8080;
 const app = require('express')();
@@ -50,6 +51,17 @@ passport.use('login', new LocalStrategy({
         })
     })
 )
+
+passport.use(new FacebookStrategy({
+    clientID: 'What is this?',
+    clientSecret: 'Or this',
+    callbackURL: '/auth/facebook/callback',
+    profileFields: ['id', 'displayName', 'photos', 'emails'],
+    scope: ['email']
+  }, (accessToken, refreshToken, profile, done) => {
+      let userProfile = profile;
+      return done(null, userProfile);
+  }));
 
 passport.use('register', new LocalStrategy({
         passReqToCallback : true
@@ -108,6 +120,11 @@ app.use(session({
     saveUninitialized: false,
     ttl: 10 * 60
 }))
+
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use(express.json());
 app.use(express.urlencoded( {extended:true } ));

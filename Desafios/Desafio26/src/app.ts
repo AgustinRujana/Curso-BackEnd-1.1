@@ -109,6 +109,9 @@ app.use(session({
     ttl: 10 * 60
 }))
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.json());
 app.use(express.urlencoded( {extended:true } ));
 app.use(express.static('public'));

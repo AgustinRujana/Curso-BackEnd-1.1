@@ -16,4 +16,8 @@ module.exports = (app) => {
         .post(userService.registerUser)
     app.route('/failregister')
         .get(userService.failRegister)
+    app.route('/auth/facebook')
+        .get(userService.facebookLogIn)
+    app.route('/auth/facebook/callback')
+        .get(userService.facebookCallback)
 }
