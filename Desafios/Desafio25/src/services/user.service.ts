@@ -1,3 +1,5 @@
+import passport from 'passport';
+
 module.exports = {
     checkIn: (req, res) => {
         let userName = req.cookies.Usuario
@@ -5,16 +7,39 @@ module.exports = {
     },
 
     goToLogin: (req, res) => {
+        if(req.isAuthenticated()) {
+            res.render("login", {nombre: req.user.username})
+        }
         res.sendFile('pages/login.html', {root: './public'})
     },
 
     logInComplete: (req, res) => {
-        let { userName } = req.body
-        res.cookie('Usuario', userName, {maxAge: 600000}).render("login", {nombre : userName})
+        passport.authenticate('login', { failureRedirect: '/faillogin' }), (req,res) => {
+            res.redirect('/')        
+        }
     },
 
-    logout: (req, res) => {
+    logOut: (req, res) => {
         let userName = req.cookies.Usuario
-        res.clearCookie('Usuario').render("logout", {nombre: userName})
-    }
+        req.logout()
+        res.render("logout", {nombre: userName})
+    },
+
+    failLogin: (req, res) => {
+        res.render('loginError', {})
+    },
+
+    registerForm: (req, res) => {
+        res.sendFile('pages/register.html', {root: './public'})
+    },
+
+    registerUser: (req, res) => {
+        passport.authenticate('register', { failureRedirect: '/failregister' }), (req,res) => {
+            res.redirect('/') 
+        }
+    },
+
+    failRegister: (req, res) => {
+        res.render("registerError",  {})
+    },
 }

@@ -8,5 +8,12 @@ module.exports = (app) => {
         .get(userService.goToLogin)
         .post(userService.logInComplete)
     app.route('/logout')
-       .get(userService.logout)
+        .get(userService.logOut)
+    app.route('/faillogin')
+        .get(userService.failLogin)
+    app.route('/register')
+        .get(userService.registerForm)
+        .post(userService.registerUser)
+    app.route('/failregister')
+        .get(userService.failRegister)
 }
