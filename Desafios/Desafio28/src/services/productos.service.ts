@@ -66,8 +66,7 @@ module.exports = {
             Memoria: process.memoryUsage(),
             PathEje:process.execPath,
             ProcessID: process.pid,
-            CarpetaCorriente: process.cwd(),
-            NumeroDeProcesadores: require('os').cpus().length
+            CarpetaCorriente: process.cwd()
         })
     },
 
