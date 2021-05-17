@@ -1,0 +1,2 @@
+{"message":"Prueba de Error","level":"error","service":"user-service"}
+{"message":"Prueba de Warn","level":"warn","service":"user-service"}

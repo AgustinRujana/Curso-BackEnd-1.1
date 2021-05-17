@@ -1,0 +1,8 @@
+{"message":"Running on port 8080","level":"info","service":"user-service"}
+{"message":"Base MongoDB conectada","level":"info","service":"user-service"}
+{"message":"Prueba de Error","level":"error","service":"user-service"}
+{"message":"Prueba de Warn","level":"warn","service":"user-service"}
+{"message":"Prueba de Info","level":"info","service":"user-service"}
+{"message":"Prueba de Http","level":"http","service":"user-service"}
+{"message":"Running on port 8080","level":"info","service":"user-service"}
+{"message":"Base MongoDB conectada","level":"info","service":"user-service"}

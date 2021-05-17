@@ -6,7 +6,6 @@ import passport from 'passport';
 import bCrypt from 'bCrypt';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as FacebookStrategy } from 'passport-facebook'
-import { worker } from 'cluster';
 
 const port: number = 8080;
 const app = require('express')();
@@ -22,6 +21,37 @@ const userRoutes = require('./routes/user')
 
 const io = require('socket.io')(httpServer);
 
+///////////////////////////////////////////////////////////
+//                  INICIALIZAMOS WINSTON                //
+///////////////////////////////////////////////////////////
+
+//  Elegi winston por ser el mas popular, me incline por pino en un comienzo, me gustan las mejoras de rendimiento pero preferi lo mainstream.
+
+const winston = require('winston')
+const logger = winston.createLogger({
+    level: 'http',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+
+      new winston.transports.File({ filename: 'error.log', level: 'error' }), //Aca solo se ven Errors
+      new winston.transports.File({ filename: 'warn.log', level: 'warn' }),  //Aca Errors y warns
+      new winston.transports.File({ filename: 'info.log', level: 'info' }), //Aca info, warns y errors
+      new winston.transports.File({ filename: 'combined.log' }),
+    ],
+  });
+
+logger.error('Prueba de Error')
+logger.warn('Prueba de Warn')
+logger.info('Prueba de Info')
+logger.http('Prueba de Http')
+logger.verbose('Prueba de lo que sea que sea verbose')
+logger.debug('Prueba de debug')
+logger.silly('Prueba de silly')
+
+// Por lo que lei, no se puede en winston o no encontre como para restingir el registro a UN SOLO nivel.
+
+//////////////////////////////////////////////////////////
 
 const isValidPassword = (user, password) => {
     return bCrypt.compareSync(password, user.password);
@@ -144,29 +174,25 @@ passport.use('login', new LocalStrategy({
     //Io
     messageService(io)
 
-
-    ////////////////////////////
-    // ACA ESTA EL DESAFIO 29 //
-    ////////////////////////////
-    
     const cluster = require('cluster')
     const numCPUs = require('os').cpus().length
     
     let ServerMode = process.env.ServerMode || "fork";
     
-
-
     //Listen
     if(ServerMode == "fork") {
         httpServer.listen(port, async () => {
-            console.log(`Running on port ${port}`)
+            logger.info(`Running on port ${port}`)
+            //console.log(`Running on port ${port}`)
             try {
                 const mongo = new MongoDB('mongodb+srv://agustin:Ar41735233@cluster0.5w5mk.mongodb.net/ecommerce?retryWrites=true&w=majority')
             await mongo.connect()
-            console.log('Base MongoDB conectada')
+            logger.info('Base MongoDB conectada')
+            // console.log('Base MongoDB conectada')
         }
         catch(error) {
-            console.log(`Error en conexión de Base de datos: ${error}`)
+            logger.error(`Error en conexión de Base de datos: ${error}`)
+            // console.log(`Error en conexión de Base de datos: ${error}`)
         }
         })
     }
@@ -184,35 +210,18 @@ passport.use('login', new LocalStrategy({
             })
         } else {
             httpServer.listen(port, async () => {
-                console.log(`Running on port ${port}`)
+                logger.info(`Running on port ${port}`)
+                // console.log(`Running on port ${port}`)
                 try {
                     const mongo = new MongoDB('mongodb+srv://agustin:Ar41735233@cluster0.5w5mk.mongodb.net/ecommerce?retryWrites=true&w=majority')
                 await mongo.connect()
-                console.log('Base MongoDB conectada')
+                logger.info('Base MongoDB conectada')
+                // console.log('Base MongoDB conectada')
             }
             catch(error) {
-                console.log(`Error en conexión de Base de datos: ${error}`)
+                logger.error(`Error en conexión de Base de datos: ${error}`)
+                // console.log(`Error en conexión de Base de datos: ${error}`)
             }
             })
         }
     }
-
-    //npm i -g forever
-
-    //forever start -w src/app.ts
-    //forever list
-    //forever stop id
-    //forever stopall
-    //forever --help
-
-    //npm i -g pm2
-    //pm2 start src/app.ts --name="ServerX" --watch
-    //pm2 start src/app.ts --name="ServerX" --watch -i max
-
-    //pm2 list
-    //pm2 delete id/name
-    //pm2 desc name
-    //pm2 monit
-    //pm2 --help
-    //pm2 logs
-    //pm2 flush
