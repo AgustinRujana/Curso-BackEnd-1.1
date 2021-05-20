@@ -59,6 +59,18 @@ module.exports = {
     },
 
     getInfo: (req, res) => {
+
+        // console.log({
+        //     ArgDeEntrada: process.execArgv,
+        //     SistOperativo: process.platform,
+        //     Version: process.version,
+        //     Memoria: process.memoryUsage(),
+        //     PathEje:process.execPath,
+        //     ProcessID: process.pid,
+        //     CarpetaCorriente: process.cwd(),
+        //     NumeroDeProcesadores: require('os').cpus().length
+        // })
+
         res.render("info", {
             ArgDeEntrada: process.execArgv,
             SistOperativo: process.platform,
@@ -71,14 +83,14 @@ module.exports = {
         })
     },
 
-    generateRandoms: (req, res) => {
-        const { fork } = require('child_process')
-        let amount = req.query.cant || 100000000
-        const RandomGenerator = fork('../js/RandomGenerator.js')
-        RandomGenerator.send({amount: amount})
-        RandomGenerator.on('end', response =>{
-            res.end(response)
-        })
-    }
+    // generateRandoms: (req, res) => {
+    //     const { fork } = require('child_process')
+    //     let amount = req.query.cant || 100000000
+    //     const RandomGenerator = fork('../js/RandomGenerator.js')
+    //     RandomGenerator.send({amount: amount})
+    //     RandomGenerator.on('end', response =>{
+    //         res.end(response)
+    //     })
+    // }
 }
 

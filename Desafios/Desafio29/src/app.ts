@@ -178,6 +178,8 @@ passport.use('login', new LocalStrategy({
     const numCPUs = require('os').cpus().length
     
     let ServerMode = process.env.ServerMode || "fork";
+    logger.warn(ServerMode);
+    
     
     //Listen
     if(ServerMode == "fork") {
