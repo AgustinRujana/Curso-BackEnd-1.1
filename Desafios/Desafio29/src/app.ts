@@ -21,6 +21,7 @@ const userRoutes = require('./routes/user')
 
 const io = require('socket.io')(httpServer);
 
+
 ///////////////////////////////////////////////////////////
 //                  INICIALIZAMOS WINSTON                //
 ///////////////////////////////////////////////////////////
@@ -41,15 +42,7 @@ const logger = winston.createLogger({
     ],
   });
 
-logger.error('Prueba de Error')
-logger.warn('Prueba de Warn')
-logger.info('Prueba de Info')
-logger.http('Prueba de Http')
-logger.verbose('Prueba de lo que sea que sea verbose')
-logger.debug('Prueba de debug')
-logger.silly('Prueba de silly')
-
-// Por lo que lei, no se puede en winston o no encontre como para restingir el registro a UN SOLO nivel.
+  // Por lo que lei, no se puede en winston o no encontre como para restingir el registro a UN SOLO nivel.
 
 //////////////////////////////////////////////////////////
 

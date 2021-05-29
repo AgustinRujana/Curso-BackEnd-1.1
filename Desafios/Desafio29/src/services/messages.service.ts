@@ -1,4 +1,8 @@
 import fs from 'fs'
+///////////////////////////////////////////////////////////
+//                  Desafio 34                           //
+///////////////////////////////////////////////////////////
+import * as twilio from '../services/twilio.service'
 
 export class messageClass {
     author: object;
@@ -30,6 +34,11 @@ module.exports = (io) => {
                     avatar: payload.author.avatar
                 },
                 text : payload.text
+            }
+
+            if(payload.text.includes('administrador')) {
+                let msg = 'El usuario ' + payload.author.email + ' te envió el msg: ' + payload.text
+                twilio.enviarSMS(msg, 'Numero de Telefono')
             }
 
             let messagesJSON = [...messagesFromServer, msg]

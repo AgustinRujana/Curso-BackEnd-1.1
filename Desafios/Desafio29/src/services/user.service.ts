@@ -1,5 +1,11 @@
 import passport from 'passport';
 
+
+///////////////////////////////////////////////////////////
+//                  Desafio 34                           //
+///////////////////////////////////////////////////////////
+import * as ethereal from '../services/emailer.service'
+
 module.exports = {
     checkIn: (req, res) => {
         let userName = req.cookies.Usuario
@@ -15,6 +21,10 @@ module.exports = {
 
     logInComplete: (req, res) => {
         passport.authenticate('login', { failureRedirect: '/faillogin' }), (req,res) => {
+            ethereal.enviarMail('Log In', `Ingresó ${req.user.displayName} en la fecha ${new Date().toLocaleString()}`, (err, info) => {
+                if(err) console.log(err)
+                else console.log(info)
+            })
             res.redirect('/')        
         }
     },
@@ -22,6 +32,10 @@ module.exports = {
     logOut: (req, res) => {
         let userName = req.cookies.Usuario
         req.logout()
+        ethereal.enviarMail('Log Out', `Se desconecto ${req.user.displayName} en la fecha ${new Date().toLocaleString()}`, (err, info) => {
+            if(err) console.log(err)
+            else console.log(info)
+        })
         res.render("logout", {nombre: userName})
     },
 

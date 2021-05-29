@@ -5,10 +5,10 @@ module.exports = (app) => {
     app.route('/')
         .get(userService.checkIn)
     app.route('/login')
-        .get(userService.goToLogin)
-        .post(userService.logInComplete)
+        .get(userService.goToLogin) 
+        .post(userService.logInComplete)  // Email LogIn
     app.route('/logout')
-        .get(userService.logOut)
+        .get(userService.logOut)  // Email LogOut
     app.route('/faillogin')
         .get(userService.failLogin)
     app.route('/register')
