@@ -161,6 +161,46 @@ passport.use('login', new LocalStrategy({
     productoRoutes(app)
     userRoutes(app)
     
+    // GraphQL schema
+    import { graphqlHTTP } from 'express-graphql';
+    import { buildSchema } from 'graphql';
+    const schema = buildSchema(`
+    type Query {
+        mensaje: String,
+        productos: [Producto]
+    }
+    type Mutation {
+        guardarProducto(titulo: String!,texto: String!,autor: String!,): Producto
+    },
+    type Productos {
+        titulo: String
+        texto: String
+        autor: String
+    }    
+    `);
+
+    let productos: any[] = []
+
+    var guardarProducto = function({titulo,texto,autor}) {
+    let producto = {titulo,texto,autor}
+    productos.push(producto);
+    return producto
+    }
+
+    //Root
+    const root = {
+    mensaje: () => 'GraphQL: Ingrese Producto',
+    productos : () => productos,
+    guardarProducto : guardarProducto
+    };
+
+    app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true
+    }));
+
+    
     //Handlebars
     HBSInitialize(app)
     
