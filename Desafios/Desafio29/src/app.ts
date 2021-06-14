@@ -181,10 +181,10 @@ passport.use('login', new LocalStrategy({
 
     let productos: any[] = []
 
-    var guardarProducto = function({titulo,texto,autor}) {
-    let producto = {titulo,texto,autor}
-    productos.push(producto);
-    return producto
+    const guardarProducto = ({titulo,texto,autor}) => {
+        let producto = {titulo,texto,autor}
+        productos.push(producto);
+        return producto
     }
 
     //Root
