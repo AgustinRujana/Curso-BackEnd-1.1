@@ -19,6 +19,7 @@ let productos: any[] = []
 const existanceCheck = (id, req, res) => {   
     const producto: any = productos.find( producto => producto.id === id)
     if (!producto) {
+        console.log('Producto No encontrado')
         res.sendStatus(404)
     }
     return producto
@@ -26,14 +27,16 @@ const existanceCheck = (id, req, res) => {
 
 module.exports = { 
     getAll: (req, res) => {
-        res.sendFile('form&List.html', {root: './public'})
+        res.status(200).send(productos)
+        //res.sendFile('form&List.html', {root: './public'})
     },
 
     addOne: (req, res) => {
         const {title, price, thumbnail} = req.body 
         let productoNuevo = new productoClass(productos.length, title, price, thumbnail)
         productos.push(productoNuevo)
-        res.sendFile('form&List.html', {root: './public'})
+        res.status(200).send(productos)
+        //res.sendFile('form&List.html', {root: './public'})
     },
 
     showAll: (req, res) => {
@@ -46,16 +49,19 @@ module.exports = {
 
     updateOne: (req, res) => {
         const producto = existanceCheck(req.params.id, req, res)
+        console.log(productos)
         const { title, price, thumbnail } = req.body
         producto.title = title
         producto.price = price
         producto.thumbnail = thumbnail
+        res.status(200).send(productos)
     },
 
     deleteOne: (req, res) => {
         const id: number = req.params.id
         existanceCheck(id, req, res)
         productos = productos.filter( producto => producto.id !== id)
+        res.status(200).send(productos)
     },
 
     getInfo: (req, res) => {

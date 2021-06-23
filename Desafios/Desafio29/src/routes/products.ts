@@ -10,8 +10,8 @@ module.exports = (app) => {
         .get(productoService.getOne)
         .put(productoService.updateOne)
         .delete(productoService.deleteOne)
-    app.route('/info')
-        .get(productoService.getInfo)
+    // app.route('/info')
+    //     .get(productoService.getInfo)
     // app.route('/randoms')
     //     .get(productoService.generateRandoms)
 }
