@@ -40,11 +40,12 @@ module.exports = {
     },
 
     showAll: (req, res) => {
-        productos.length > 0 ? res.render("productList", {productos, pageTitle : "Lista de productos", listExists: true}) : res.render("productList", {listExists: false})
+        productos.length > 0 ? res.status(200).render("productList", {productos, pageTitle : "Lista de productos", listExists: true}) : res.status(200).render("productList", {listExists: false})
     },
 
     getOne: (req, res) => {
-        existanceCheck(req.params.id, req, res)
+        let producto = existanceCheck(req.params.id, req, res)
+        res.status(200).send(producto)
     },
 
     updateOne: (req, res) => {
